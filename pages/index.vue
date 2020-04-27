@@ -73,24 +73,25 @@ export default class Index extends Vue {
           //const today=moment(time);
           if (res.data.currently) {
             const currentDataItem = res.data.currently;
-            this.currently = new ForecastItem(
+            console.log("Currently....",currentDataItem);
+            this.currently = {...new ForecastItem(
               false,
-              moment(res.data.currently.time *1000).format('YYYY-MM-DD'),
+              moment(new Date()).format('YYYY-MM-DD'),
               currentDataItem.icon,
               currentDataItem.temperature,
               currentDataItem.summary,
               "AAAAAAA"
-            );
+            )};
           }
-          this.currently = res.data.currently;
+          
           this.dailyPrediction = [];
           res.data.daily.data.forEach((element: any, index: number) => {
             if (index !== 0) {
               let item = new ForecastItem(
                 index === 1 ? true : false,
-                moment(res.data.daily.data[index].time*1000).format('YYYY-MM-DD'),
+                moment(element.time*1000).format('dddd'),
                 element.icon,
-                element.temperature,
+                element.temperatureHigh,
                 element.summary,
                 this.searchKey
               );

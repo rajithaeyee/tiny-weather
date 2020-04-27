@@ -3,11 +3,11 @@ export default class ForecastItem{
     date!: string;
     dayName!: string;
     icon!: string;
-    temperature!: string;
+    temperature!: number;
     summary!: string;
     location!: string;
 
-    constructor(isTomorrow:boolean, date: string, icon: string, temperature: string, summary: string, location: string){
+    constructor(isTomorrow:boolean, date: string, icon: string, temperature: number, summary: string, location: string){
         this.isTomorrow = isTomorrow;
         this.date = date;
         this.icon = icon;
