@@ -4,7 +4,7 @@
     <div class="container header-content">
       <div class="field has-addons has-addons-centered">
   <p class="control">
-    <input class="input" v-model="searchKey" type="text" placeholder="Enter Your Country/City">
+    <input class="input" v-model="searchKey" type="text" placeholder="Enter Your City/Country">
   </p>
   <p class="control">
     <a class="button is-primary" @click="search">
@@ -23,8 +23,7 @@ import {Vue, Component, Prop} from 'nuxt-property-decorator';
 
 @Component({})
 export default class Header extends Vue{
-  @Prop({})
-  searchKey!:string;
+  searchKey:string = "";
   @Prop({})
   searchForLocation!:Function;
 

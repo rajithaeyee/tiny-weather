@@ -1,23 +1,14 @@
 <template>
-  <!-- <div class="table is-striped table is-hoverable is-fullwidth">
-    <tbody>
-      <tr><td>{{forecastItem.date}}</td>
-        <td>
-          <skycon :condition="forecastItem.icon" width="20" height="20"/> {{forecastItem.temprature}}</td>
-      </tr>
-    </tbody>
-  </div> -->
+
   <div class="columns forecast-item" style="padding-top:2%;">
     <div class="column is-one-quarter">
       {{forecastItem.date}}
     </div>
-    <!-- <div class="column is-one-third">
 
-    </div> -->
  <div class="column is-two-thirds" style="text-align:center">
   <skycon :condition="forecastItem.icon" width="20" height="20" />
   <br/>
-  {{forecastItem.temperature}}
+  {{forecastItem.temperature}}&#8451;
   <br/>
   <h6>{{forecastItem.summary}}</h6>
     </div>

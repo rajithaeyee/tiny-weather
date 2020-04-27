@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :searchForLocation="searchForLocation" :searchKey="searchKey" />
+    <Header :searchForLocation="searchForLocation" />
     <WeatherDisplay v-if="shouldDisplay" :currently="currently" :dailyPrediction="dailyPrediction" />
     <!-- <skycon condition="clear-day" />
     <skycon condition="clear-night" />-->
@@ -30,7 +30,6 @@ export default class Index extends Vue {
     this.searchKey = "";
   }
   asyncData(context: any) {
-    console.log(`${process.env.darkUrl}`);
     return context.$axios
       .get(`${process.env.darkUrl}/37.8267,-122.4233?units=si&lang=en`)
       .then((res: any) => {
@@ -46,6 +45,7 @@ export default class Index extends Vue {
     latitude: 0
   };
   async searchForLocation(searchText: string) {
+    this.searchKey = searchText;
     (this as any).$axios
       .get(
         `${process.env.mapUrl}${encodeURIComponent(
@@ -53,7 +53,6 @@ export default class Index extends Vue {
         )}.json?access_token=${process.env.mapKey}&limit=1`
       )
       .then((res: any) => {
-        debugger;
         this.locationDetails = {
           longtude: res.data.features[0].center[0],
           latitude: res.data.features[0].center[1]
@@ -64,7 +63,6 @@ export default class Index extends Vue {
   @Watch("locationDetails")
   async locationsChanged() {
     if (this.locationDetails.longtude !== 0 && this.locationDetails.latitude) {
-      console.log(this.locationDetails);
       (this as any).$axios
         .get(
           `/api/${this.locationDetails.latitude},${this.locationDetails.longtude}?units=si&lang=en`
@@ -73,14 +71,13 @@ export default class Index extends Vue {
           //const today=moment(time);
           if (res.data.currently) {
             const currentDataItem = res.data.currently;
-            console.log("Currently....",currentDataItem);
             this.currently = {...new ForecastItem(
               false,
               moment(new Date()).format('YYYY-MM-DD'),
               currentDataItem.icon,
               currentDataItem.temperature,
               currentDataItem.summary,
-              "AAAAAAA"
+              this.searchKey
             )};
           }
           
@@ -98,10 +95,6 @@ export default class Index extends Vue {
               this.dailyPrediction.push(item);
             }
           });
-
-          console.log(this.currently);
-          console.log(this.dailyPrediction);
-          //}
         });
     }
   }
