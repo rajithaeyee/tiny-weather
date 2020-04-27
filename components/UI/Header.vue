@@ -32,7 +32,6 @@ export default class Header extends Vue{
   }
 
   async keyupHandler(event:any){
-    console.log("eee", event);
     if(event.code==="Enter"){
       await this.searchForLocation(this.searchKey)
     }
