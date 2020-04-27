@@ -5,7 +5,7 @@
         <Today :forecastItem="currently"/>
       </div>
       <div class="column is-three-quarters" style="z-index:-1; min-height:118vh;">
-       <ForeCastItem :key="key" :forecastItem="item" v-for="(item, key) in dailyPrediction"/> 
+       <ForeCastItem :key="index" :forecastItem="item" v-for="(item, index) in dailyPrediction" /> 
       </div>
     </div>  
 </div>

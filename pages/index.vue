@@ -33,11 +33,37 @@ export default class Index extends Vue {
     return context.$axios
       .get(`${process.env.darkUrl}/37.8267,-122.4233?units=si&lang=en`)
       .then((res: any) => {
+            if (res.data && res.data.currently) {
+            const currentDataItem = res.data.currently;
+            let currently = {...new ForecastItem(
+              false,
+              moment(new Date()).format('YYYY-MM-DD'),
+              currentDataItem.icon,
+              currentDataItem.temperature,
+              currentDataItem.summary,
+              "COLOMBO"
+            )};
+
+          let dailyPrediction:ForecastItem[] = [];
+          res.data.daily.data.forEach((element: any, index: number) => {
+            if (index !== 0) {
+              let item = new ForecastItem(
+                index === 1 ? true : false,
+                moment(element.time*1000).format('dddd'),
+                element.icon,
+                element.temperatureHigh,
+                element.summary,
+                "COLOMBO"
+              );
+              dailyPrediction.push(item);
+            }
+          });
         return {
-          currently: res.data.currently,
-          dailyPrediction: res.data.daily,
+          currently: currently,
+          dailyPrediction: dailyPrediction,
           shouldDisplay: true
         };
+        }
       });
   }
   locationDetails: any = {
@@ -68,7 +94,6 @@ export default class Index extends Vue {
           `/api/${this.locationDetails.latitude},${this.locationDetails.longtude}?units=si&lang=en`
         )
         .then((res: any) => {
-          //const today=moment(time);
           if (res.data.currently) {
             const currentDataItem = res.data.currently;
             this.currently = {...new ForecastItem(

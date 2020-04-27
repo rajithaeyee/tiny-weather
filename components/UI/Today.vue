@@ -1,11 +1,11 @@
 <template>
 <div class="weather-widget" style="padding-top:2%;">
-  <h2 class="country-name">{{forecastItem.location}}</h2>
+  <h2 class="country-name">{{forecastItem.location.toUpperCase()}}</h2>
   <span class="date">{{forecastItem.date}}</span>
    <div class="weather-icon row">
       <skycon :condition="forecastItem.icon" :width="250" :height="250"/>
   </div>
-  <h2>Temprature Now : {{forecastItem.temperature}}&#8451;</h2>
+  <h2>Temperature Now : {{forecastItem.temperature}}&#8451;</h2>
   <span>{{forecastItem.date}}</span>
 </div>
 </template>
