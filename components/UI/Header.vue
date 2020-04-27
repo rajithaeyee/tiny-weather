@@ -4,7 +4,7 @@
     <div class="container header-content">
       <div class="field has-addons has-addons-centered">
   <p class="control">
-    <input class="input" v-model="searchKey" type="text" placeholder="Enter Your City/Country">
+    <input class="input" v-model="searchKey" @keyup="keyupHandler" type="text" placeholder="Enter Your City/Country">
   </p>
   <p class="control">
     <a class="button is-primary" @click="search">
@@ -29,6 +29,13 @@ export default class Header extends Vue{
 
   async search(){
     await this.searchForLocation(this.searchKey);
+  }
+
+  async keyupHandler(event:any){
+    console.log("eee", event);
+    if(event.code==="Enter"){
+      await this.searchForLocation(this.searchKey)
+    }
   }
 }
 </script>
